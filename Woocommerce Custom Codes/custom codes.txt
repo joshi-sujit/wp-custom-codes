@@ -1,0 +1,24 @@
+/** Disable Ajax Call from WooCommerce */
+add_action( 'wp_enqueue_scripts', 'dequeue_woocommerce_cart_fragments', 11); 
+function dequeue_woocommerce_cart_fragments() { 
+	//Checking if the cart has any item
+	// Logic is only to deque the script if there is no cart item and make home page load faster.
+	if ( WC()->cart->get_cart_contents_count() == 0 ) {
+			wp_dequeue_script('wc-cart-fragments');	
+	}
+}
+
+
+
+/*ADD A CUSTOM FUNCTION TO MODIFY CHECKOUT FIELDS*/
+//Overriding woocommerce to set phone as mandatory field in checkout
+// Hook in
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+
+// Our hooked in function - $fields is passed via the filter!
+function custom_override_checkout_fields( $fields  ) {
+     $fields['billing']['billing_phone']['required'] = true;
+     return $fields;
+}
+
+/*END ADD A CUSTOM FUNCTION TO MODIFY CHECKOUT FIELDS*/

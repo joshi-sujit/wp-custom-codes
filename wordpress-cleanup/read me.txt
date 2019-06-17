@@ -1,0 +1,5 @@
+Install the plugin and identify unused js and css and type the following command in functions.php to remove unwanted js and css to load the css faster
+
+wp_dequeue_script('wc-cart-fragments');	
+
+
